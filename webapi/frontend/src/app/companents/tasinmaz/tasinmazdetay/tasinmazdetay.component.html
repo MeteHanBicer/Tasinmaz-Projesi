@@ -1,0 +1,44 @@
+ <div class="container" div *ngIf="tasinmaz">
+  <input type="hidden" #id name="id" [value]="tasinmaz.id">
+  <div class="card border-primar">
+    <div class="card header">
+      <div class="card-body text-primary" >
+        <form [formGroup]="dropDownForm" #form="ngForm">
+          <div class="form-group">
+            <label>İl</label>
+            <select name="il" ng-model="il" ng-model="myVar" #ill  formControlName="il" [value]="tasinmaz?.Mahalle?.Ilce?.ilid" (change)="GetIlceById($event)" class="form-control"  >
+              <option [value]="a.id" *ngFor = "let a of ilList" >{{a.ad}}</option>
+            </select>
+            </div>
+          <div class="form-group">
+            <label>İlçe</label>
+            <select ng-model="ilce" name="ilce" #ilcee  formControlName="ilce"  [value]="tasinmaz?.Mahalle?.ilceid"  (change)="GetMahalleById($event)" class="form-control" >
+              <option  [value]="ilcesecme.id" *ngFor="let ilcesecme of ilceList" >{{ilcesecme.ad}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mahalle</label>
+            <select ng-model="mahalle" name="mahalle" #mahallee formControlName="mahalle"   [value]="tasinmaz?.Mahalle?.ad"  class="form-control" >
+              <option  [value]="mahasec.id" *ngFor="let mahasec of mahalleList" >{{mahasec.ad}}</option>
+            </select>
+          </div>
+          <div>
+            <div class="form-group">
+            <label for="ada">Ada</label>
+              <input minlength="3" [value]="tasinmaz.ada" ng-model="ada"  maxlength="25" required #ada type="text" class="form-control" name="ada">
+            </div>
+            <div class="form-group">
+            <label for="parsel">Parsel</label>
+              <input minlength="3"  [value]="tasinmaz.parsel" ng-model="parsel" maxlength="25" required #parsel type="text" class="form-control" name="parsel" placeholder="Parsel">
+            </div>
+            <div class="form-group">
+            <label for="nitelik">Nitelik</label>
+              <input minlength="3" ng-model="nitelik"  [value]="tasinmaz.nitelik" maxlength="25"  required #nitelik type="text" class="form-control" name="nitelik" placeholder="Nitelik">
+            </div>
+          </div>
+        </form>
+      </div>
+      <button  style="margin-top: 5px;" data-toggle="modal" data-target="#myModalgüncelle" class="btn btn-success"  (click)="updateTasinmaz(id.value,ill.value,ilcee.value,mahallee.value,ada.value,parsel.value,nitelik.value);il.value='';ilce.value='';mahalle.value='';ada.value=' ';parsel.value=' ';nitelik.value=' '; "  data-dismiss="modal">Güncelle</button>
+    </div>
+  </div>
+</div>

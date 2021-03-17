@@ -1,0 +1,31 @@
+<div *ngIf="kullanici">
+  <input type="hidden" #id name="id" [value]="kullanici.id">
+  <div class="form-group">
+    <label for="ad">Ad</label>
+    <input [value]="kullanici.ad" #ad type="text" class="form-control" name="ad" required>
+  </div>
+  <div class="form-group">
+    <label for="soyad">Soyad</label>
+    <input [value]="kullanici.soyad" #soyad type="text" class="form-control" name="soyad" required>
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input [value]="kullanici.email" #email type="email" class="form-control" name="email" required>
+  </div>
+  <div class="form-group">
+    <label for="sifre">Şifre</label>
+    <input [value]="kullanici.sifre" #sifre type="text" class="form-control" name="sifre" autocomplete="on" required>
+  </div>
+  <div class="form-group">
+    <label for="adres">Adres</label>
+    <input [value]="kullanici.adres" #adres type="text" class="form-control" name="adres" required>
+  </div>
+  <form>
+    Rol
+<select ng-model="myVar" #rol required [value]="kullanici.rol" >
+  <option value="Kullanıcı">Kullanıcı
+  <option value="Admin">Admin
+</select>
+</form>
+  <button  style="margin-top: 5px;" data-toggle="modal" data-target="#myModalgüncelle" class="btn btn-success" (click) = "updateKullanici(id.value,ad.value,soyad.value,email.value,sifre.value,adres.value,rol.value);ad.value=' ';soyad.value=' ';email.value=' '; sifre.value=''; adres.value=' '; rol.value = '';"  data-dismiss="modal">Güncelle</button>
+ </div>

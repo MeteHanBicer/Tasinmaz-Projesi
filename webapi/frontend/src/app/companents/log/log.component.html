@@ -1,0 +1,43 @@
+<div class="container"> 
+    <div class="row">
+      <div class="col-md-8">
+        <h1 style="color: red;margin-top: 20px;margin-left: 250px; margin-bottom: 30px;">Log Kayıtları</h1>
+            <div>
+              
+  </div>
+  
+  <svg *ngIf="dataLoaded==true" style="margin-bottom: 10px; margin-left: 30px;" (click)="exportAsXLSX()" type="button" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" class="bi bi-file-earmark-excel-fill" viewBox="0 0 16 16">
+    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM5.884 6.68L8 9.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 10l2.233 2.68a.5.5 0 0 1-.768.64L8 10.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 10 5.116 7.32a.5.5 0 1 1 .768-.64z"/>
+  </svg>
+  <button  class="btn btn-danger btn-sm my-2 my-sm-0" type="submit" style="float: right; margin-left: 10px;" (click)="getLoglar()">Sıfırla</button>
+  <button  class="btn btn-success btn-sm my-2 my-sm-0" type="submit" style="float: right; margin-left: 10px;" (click)="getLogsearch()">Ara</button>
+<input *ngIf="dataLoaded==true" style="float: right;" placeholder="Ara" type="text" [(ngModel)]="this.search">
+  <div style="margin-right: 20px;" *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
+    <span class="visually-hidden"></span>
+  </div><span class="blink" *ngIf="dataLoaded==false">Yükleniyor...</span>
+              <table  *ngIf="dataLoaded==true" class="table table-bordered bordered table-striped">
+              <thead style="background-color: #f26419; color: white;">
+                <tr>
+                  <th>Durum</th>
+                  <th>İşlem Tipi</th>
+                  <th>Tarih Saat</th>
+                  <th>Ip</th>
+                  <th>Açıklama</th>
+                </tr>
+              </thead>
+                <tbody id="myTable">
+                  
+                    <tr  *ngFor="let a of loglar|paginate:{itemsPerPage: 5,currentPage:pageNumber,totalItems:Count}">
+        
+                        <td>{{a.durum}}</td>
+                        <td>{{a.islemTipi}}</td>
+                        <td>{{a.tarihSaat}}</td>
+                        <td>{{a.ip}}</td>
+                        <td>{{a.aciklama}}</td>
+                    </tr>
+                        </tbody>
+                      </table>
+        <pagination-controls style="float: right;" *ngIf="dataLoaded==true" (pageChange)="onPageChange($event)"></pagination-controls>
+      </div>
+      </div>
+      </div>

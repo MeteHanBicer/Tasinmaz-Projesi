@@ -1,0 +1,188 @@
+<div class="container"> 
+  <div class="row">
+    <div class="col-md-8">
+          <h1 style="color: red;margin-top: 20px;margin-left: 250px; margin-bottom: 30px;">Kullanıcı Listesi</h1>
+          <div>
+          <svg *ngIf="dataLoaded==true"  type="button" style=" margin-bottom: 10px;margin-left: 30px;" data-toggle="modal" data-target="#myModal" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="blue" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+          </svg>
+          <svg *ngIf="dataLoaded==true" (click)="exportAsXLSX()" type="button" style="margin-left: 10px;margin-bottom: 10px;" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" class="bi bi-file-earmark-excel-fill" viewBox="0 0 16 16">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM5.884 6.68L8 9.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 10l2.233 2.68a.5.5 0 0 1-.768.64L8 10.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 10 5.116 7.32a.5.5 0 1 1 .768-.64z"/>
+          </svg>
+          <button  class="btn btn-danger btn-sm my-2 my-sm-0" type="submit" style="float: right; margin-left: 10px;" (click)="getKullanicilar()">Sıfırla</button>
+          <button  class="btn btn-success btn-sm my-2 my-sm-0" type="submit" style="float: right; margin-left: 10px;" (click)="getKullanicilarsearch()">Ara</button>
+<input *ngIf="dataLoaded==true" style="float: right;" placeholder="Ara" type="text" [(ngModel)]="this.search">
+
+
+</div>
+<div style="margin-right: 20px;" *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
+  <span class="visually-hidden"></span>
+</div><span class="blink" *ngIf="dataLoaded==false">Yükleniyor...</span>
+            <table *ngIf="dataLoaded==true" class="table table-bordered bordered table-striped">
+            <thead style="background-color: #f26419; color: white;">
+              <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>E-Mail</th>
+                <th>Şifre</th>
+                <th>Adres</th>
+                <th>Rol</th>
+                <th></th>
+              </tr>
+            </thead>
+              <tbody id="myTable">
+           <tr  *ngFor="let kullanici of kullanicilar |  paginate:{itemsPerPage: 5,currentPage:pageNumber,totalItems:Count}">
+          <td>{{kullanici.ad}}</td>
+          <td>{{kullanici.soyad}}</td>
+          <td>{{kullanici.email}}</td>
+          <td>{{kullanici.sifre}}</td>
+          <td>{{kullanici.adres}}</td>
+          <td>{{kullanici.rol}}</td>
+          <td style="display: flex">
+            <svg type="button"  style="margin-right: 4px" data-target="#mymodal" style="margin-right: 10px;" (click) = "onSelectKullanici(kullanici)" data-toggle="modal" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+            <svg data-toggle="modal"  data-target="#myModaldelete"  (click)="deleteKullanici(kullanici)" type="button" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" class="bi bi-trash-fill" viewBox="0 0 16 16">
+              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+          </td>
+      </tr>
+          </tbody>
+        </table>
+        <pagination-controls style="float: right;" *ngIf="dataLoaded==true" (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
+    </div>
+    </div>
+<!-- modalekle -->
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 style="color: darkmagenta;">Kullanıcı Ekle</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div>
+          <form #form="ngForm">
+          <div class="form-group">
+            <input minlength="3" ng-model="ad"  maxlength="25" required #ad type="text" class="form-control" name="ad"  placeholder="Ad" [(ngModel)]="modele.ad">
+            <!-- <div class="alert alert-danger" *ngIf="ad.invalid && ad.touched">
+              Name is Required
+            </div> -->
+          </div>
+          <div class="form-group">
+            <input minlength="3" ng-model="soyad" maxlength="25" required #soyad type="text" class="form-control" name="soyad" placeholder="Soyad" [(ngModel)]="modele.soyad" >
+          </div>
+          <div class="form-group">
+            <input minlength="3" ng-model="email" maxlength="25" email required #email type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="modele.email" >
+          </div>
+          <div class="form-group">
+            <input minlength="8" ng-model="sifre" maxlength="25"  required #sifre type="text" class="form-control" name="sifre" autocomplete="on" placeholder="Şifre" [(ngModel)]="modele.sifre" >
+          </div>
+          <div class="form-group">
+            <input  minlength="3" ng-model="adres" maxlength="25" required #adres type="text" class="form-control" name="adres" placeholder="Adres" [(ngModel)]="modele.adres">
+          </div>
+              Rol
+          <select name="rol" ng-model="myVar" #rol placeholder="Rol" required [(ngModel)]="modele.rol">
+            <option value="Kullanıcı">Kullanıcı
+            <option value="Admin">Admin
+          </select>
+        </form>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button data-dismiss="modal"  class="btn btn-primary" data-toggle="modal" data-target="#myModalekle" [disabled]="form.invalid" >Ekle</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ModalGüncelle -->
+<!-- The Modal -->
+<div class="modal fade" id="mymodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Kullanıcı Güncelle</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+      <kullanicidetay [kullanici]="selectedKullanici" [kullanicilar] = "kullanicilar" ></kullanicidetay>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ModalSilme -->
+<!-- The Modal -->
+<div class="modal fade" id="myModaldelete">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Kullanıcı Silme</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+      Kullanıcı Silindi 
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- The Modalekleekle --> 
+<div class="modal fade" id="myModalekle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Kullanıcı Eklensin mi ? </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)=" addKullanici(ad.value,soyad.value,email.value,sifre.value,adres.value,rol.value);ad.value='';soyad.value='';email.value='';sifre.value='' ; adres.value=''; rol.value= null;" >Evet</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Hayır</button>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- The Modagüncelle --> 
+<div class="modal fade" id="myModalgüncelle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Kullanıcı Güncelleme</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        Kullanıcı Güncellendi
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

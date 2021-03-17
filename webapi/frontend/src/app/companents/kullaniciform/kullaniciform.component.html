@@ -1,0 +1,28 @@
+<!-- <div>
+  <h3 style="color: darkmagenta;">Kullanıcı Ekle</h3>
+  <form #form="ngForm">
+  <div class="form-group">
+    <input  maxlength="25" required #ad type="text" class="form-control" name="ad"  placeholder="Ad">
+    <div class="alert alert-danger" *ngIf="ad.invalid && ad.touched">
+      Name is Required
+    </div>
+  </div>
+  <div class="form-group">
+    <input ng-model="soyad" maxlength="25" required #soyad type="text" class="form-control" name="soyad" placeholder="Soyad">
+  </div>
+  <div class="form-group">
+    <input ng-model="email" maxlength="25" email required #email type="email" class="form-control" name="email" placeholder="Email" >
+  </div>
+  <div class="form-group">
+    <input ng-model="adres" maxlength="25" required #adres type="text" class="form-control" name="adres" placeholder="Adres" >
+  </div>
+    <form>
+      Rol
+  <select ng-model="myVar" #rol placeholder="Rol">
+    <option value="Kullanıcı">Kullanıcı
+    <option value="Admin">Admin
+  </select>
+</form>
+  <button style="margin-top: 20px; margin-left: 200px;" class="btn btn-primary" (click) = "addKullanici(ad.value,soyad.value,email.value,adres.value,rol.value);ad.value=' ';soyad.value=' ';email.value=' '; adres.value=' '; rol.value= null;">Ekle</button>
+</form>
+</div> -->
